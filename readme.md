@@ -1,27 +1,41 @@
-# Laravel PHP Framework
+# 易宝后台初始化框架
 
-[![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework)
-[![Total Downloads](https://poser.pugx.org/laravel/framework/d/total.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Stable Version](https://poser.pugx.org/laravel/framework/v/stable.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Unstable Version](https://poser.pugx.org/laravel/framework/v/unstable.svg)](https://packagist.org/packages/laravel/framework)
-[![License](https://poser.pugx.org/laravel/framework/license.svg)](https://packagist.org/packages/laravel/framework)
+基于[ForoneTech/ForoneAdministrator](https://github.com/ForoneTech/ForoneAdministrator) 5.2开发版demo项目[hhxiaohei/demo](https://github.com/hhxiaohei/demo)
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as authentication, routing, sessions, queueing, and caching.
+# 项目初始化话步骤
 
-Laravel is accessible, yet powerful, providing tools needed for large, robust applications. A superb inversion of control container, expressive migration system, and tightly integrated unit testing support give you the tools you need to build any application with which you are tasked.
+```
+1. git clone https://github.com/php-cpm/bp-demo
+2. cp .env.example .env
+3. composer install -vvv
+4. 配置.env中的mysql\redis\ADMIN_EMAIL等连接信息
+4. php artisan forone:init #初始化框架,会在数据库中新建多张表,并在redis中初始化entrust,并以ADMIN_EMAIL创建初始管理员账号
+5. 配置nginx\php
+```
 
-## Official Documentation
+#配置nginx
 
-Documentation for the framework can be found on the [Laravel website](http://laravel.com/docs).
+```
+server
+{
+    listen 8180;
+    root /你项目路径/demo/public;
 
-## Contributing
+    location / {
+        try_files $uri $uri/ /index.php?$query_string;
+        index index.php index.html;
+    }
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](http://laravel.com/docs/contributions).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
+    location ~ .php {
+        fastcgi_pass   127.0.0.1:9000;
+        fastcgi_index  index.php;
+        fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
+        include        fastcgi_params;
+        fastcgi_buffer_size 128k;
+        fastcgi_buffers 256 4k;
+        fastcgi_busy_buffers_size 256k;
+        fastcgi_temp_file_write_size 256k;
+    }
+    access_log  super_access.log;
+}
+```

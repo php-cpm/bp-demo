@@ -1,5 +1,5 @@
 {
-    "name": "laravel/laravel",
+    "name": "php-cpm/bp-demo",
     "description": "The Laravel Framework.",
     "keywords": ["framework", "laravel"],
     "license": "MIT",
@@ -43,6 +43,7 @@
         ]
     },
     "minimum-stability": "dev",
+    "prefer-stable": true,
     "scripts": {
         "post-root-package-install": [
             "php -r \"copy('.env.example', '.env');\""

@@ -3599,6 +3599,7 @@ fieldset[disabled] .md-switch input + i:after {
 }
 
 .box .box-inner {
+  text-align: center;
   position: absolute;
   top: 0;
   right: 0;

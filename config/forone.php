@@ -13,9 +13,9 @@ return [
         'administrator_auth_controller' => 'Auth\AuthController'
     ],
     'site_config'                 => [
-        'site_name'   => 'DEMO后台',
-        'title'       => 'DEMO后台',
-        'description' => 'DEMO后台',
+        'site_name'   => '管理后台',
+        'title'       => '管理后台',
+        'description' => '管理后台',
         'logo'        => 'vendor/forone/images/logo.png'
     ],
     'RedirectAfterLoginPath'      => 'home', // 登录后跳转页面
